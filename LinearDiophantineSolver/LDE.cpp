@@ -105,11 +105,11 @@ int LDE::GetNoOfSolutionsInRange(int xMin, int xMax, int yMin, int yMax)
         std::cout<<" Equation has "<< SolutionCount<< " solutions in range ("<<xMin<<","<<xMax<<")\n";
         shiftSolution(x, y, a, b, (xMin - x)/b);
         
-        int temp=1;
+        int temp=0;
         while(temp++<=SolutionCount)
         {
             std::cout<<temp<<". ("<<x<<","<<y<<")\n";
-            shiftSolution(x, y, a, b, -1);
+            shiftSolution(x, y, a, b, 1);
             
         }
     }

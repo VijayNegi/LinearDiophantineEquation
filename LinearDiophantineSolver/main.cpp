@@ -13,7 +13,8 @@ int main(int argc, const char * argv[]) {
     std::cout << "Hello, World!\n";
     
     //LDE eqe = LDE(3, 5, 47);
-    LDE eqe = LDE(7, -9,3);
+    //LDE eqe = LDE(7, -9,3);
+    LDE eqe = LDE(60, 33,9);
     eqe.SolveForOneSolution();
     int num = eqe.GetNoOfSolutionsInRange(-20, 20, -20, 20);
     std::cout<< "No of solutions of equation = "<<num<<std::endl;
