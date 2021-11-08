@@ -69,25 +69,43 @@ int LDE::GetNoOfSolutionsInRange(int xMin, int xMax, int yMin, int yMax)
     int a = mA/g;
     int b = mB/g;
     
+    int sign_a = a > 0 ? +1 : -1;
+    int sign_b = b > 0 ? +1 : -1;
+    
     int x,y;
     std::tie(x,y) = oneSolution;
     
     shiftSolution(x, y, a, b,(xMin - x) / b);
+    // check if truncation caused an issue.
+    if (x < xMin)
+        shiftSolution(x, y, a, b, sign_b); // shift in +ve side
     if(x > xMax)
         return 0;
     int lx1 = x;
+    std::cout<<"x Min in range = ("<<x<<","<<y<<")\n";
     
     shiftSolution(x, y, a, b, (xMax-x)/b);
+    if (x > xMax)
+        shiftSolution(x, y, a, b, -sign_b);
     
     int rx1 = x;
+    std::cout<<"x Max in range = ("<<x<<","<<y<<")\n";
     
     shiftSolution(x, y, a, b, -(yMin - y)/a);
+    if (y < yMin)
+        shiftSolution(x, y, a, b, -sign_a);
     if(y>yMax)
         return 0;
     int lx2 = x;
     
+    std::cout<<"y Min in range = ("<<x<<","<<y<<")\n";
+    
     shiftSolution(x, y, a, b, -(yMax - y)/a);
+    if (y > yMax)
+        shiftSolution(x, y, a, b, sign_a);
     int rx2 = x;
+    
+    std::cout<<"y Max in range = ("<<x<<","<<y<<")\n";
     
     if (lx2 > rx2)
         std::swap(lx2, rx2);
@@ -103,13 +121,13 @@ int LDE::GetNoOfSolutionsInRange(int xMin, int xMax, int yMin, int yMax)
     if(true) // print soutions
     {
         std::cout<<" Equation has "<< SolutionCount<< " solutions in range ("<<xMin<<","<<xMax<<")\n";
-        shiftSolution(x, y, a, b, (xMin - x)/b);
+        shiftSolution(x, y, a, b, (lx - x)/b);
         
         int temp=0;
-        while(temp++<=SolutionCount)
+        while(temp++<SolutionCount)
         {
             std::cout<<temp<<". ("<<x<<","<<y<<")\n";
-            shiftSolution(x, y, a, b, 1);
+            shiftSolution(x, y, a, b, sign_b);
             
         }
     }
